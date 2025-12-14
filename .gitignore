@@ -1,0 +1,21 @@
+# Virtual environments
+.venv/
+.env/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Data (raw Kaggle data should not be pushed)
+data/raw/*.csv
+
+# Models / outputs
+models/
+data/processed/
+
+# OS junk
+.DS_Store
+Thumbs.db
