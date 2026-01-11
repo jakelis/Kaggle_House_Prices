@@ -15,6 +15,7 @@ data/raw/*.csv
 # Models / outputs
 models/
 data/processed/
+submissions/
 
 # OS junk
 .DS_Store
