@@ -26,7 +26,7 @@
 - Quantified model diversity with residual correlaton to make informed ensemble construction
  - in `06_error_analysis.ipynb`: 
 
-   | | ridge_residual| lgb_residual | rfr_residual |
+  | | ridge_residual| lgb_residual | rfr_residual |
   |----------|---------|------|------|
   | ridge_residual | 1.00000 | 0.7728 | 0.7229 |
   | lgb_residual | 0.7728 | 1.0000 | 0.9319|
