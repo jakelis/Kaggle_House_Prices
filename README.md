@@ -3,25 +3,29 @@
 - Distinguished structured vs random missingness and designed imputation strategies that preserve sementic meanng in data 
 - Improved baseline model performance through feature selection and feature engineering
   - in `03_feature_engineering.ipynb`: 
+
   Benchmark RMSE from baseline: 0.147378
+
   | versions | changes | RMSE | remarks |
   |----------|---------|------|---------|
   | v1| added engineered features | 0.14255 | raw features remained in the dataset|
   | v2| removed features that are relevant to the already engineered features| 0.14114| NA|
+
 - Compared performances of multiple models using K-fold validation
   - in `04_model_comparison.ipynb`: 
+
   | Models | mean RMSE | STD |
   |----------|---------|------|
   | Ridge | 0.1411 | 0.0224 |
   | Lasso | 0.1371 | 0.0271 |
   | Elastic Net | 0.1501 | 0.0254 |
   | Random Forest Regressor | 0.1429 | 0.0083 |
-- Analysed model residuals using Out-of-Fold (OOF) predictions: 
-  <Figure size 1000x500 with 1 Axes>
-  All models make larger errors at extreme prices
+
+- Analysed model residuals using Out-of-Fold (OOF) predictions, in `06_error_analysis.ipynb`, residual by price quantile plot - shows residuals increase at the tails of the target distribution, indicating difficulty modelling extreme house prices 
 
 - Quantified model diversity with residual correlaton to make informed ensemble construction
  - in `06_error_analysis.ipynb`: 
+
    | | ridge_residual| lgb_residual | rfr_residual |
   |----------|---------|------|------|
   | ridge_residual | 1.00000 | 0.7728 | 0.7229 |
