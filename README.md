@@ -1,4 +1,5 @@
 # Project Highlight
+- Featured research extension of the project that investigates the optimistic estimation effect of K-fold cross validation without nested cross validation, featured at `08_research_extension`
 - End-to-end regression pipeline with data leakage prevention practices: Use of `ColumnTransformer()` and `Pipeline()`
 - Distinguished structured vs random missingness and designed imputation strategies that preserve sementic meanng in data 
 - Improved baseline model performance through feature selection and feature engineering
@@ -97,6 +98,11 @@ Target variable : SalePrice
 - Compared RMSE with a ensemble of three blended models
 - Decided on final model and produced submission predictions
 
+# Research extension
+- To reduce hyperparameter selection bias, a 3x3 nested cross validation framework was used
+- The outer loop estimates performance while the inner loop performs hyperparameter tuning
+- compared to standard K-fold cross validation, it was found that nested CV produced higher RMSE and RMSE STD indicating optimism in the original estimate
+
 # Key Learnings
 - Not all missingness are random, some are structured, which means they are expected and they represent certain meaning 
 - skewed distritbution is identified by the plotted distribution has a long tail on one side, and this will cause the extreme values to dominate loss function
@@ -116,6 +122,6 @@ Target variable : SalePrice
 
 - Baseline model started with Ridge, and in model comparison different regularisation were compared, the ordinary least square LinearRegression could be included to compare the effect of regularisation as well
 
-- During hyperparameter tuning, CV results were used to tune the hyperparameters and the same CV results were used to estimate performance, it could have introduced optimism in estimated performance. A better way will be to do Nested CV instead.
+- During hyperparameter tuning, CV results were used to tune the hyperparameters and the same CV results were used to estimate performance, it could have introduced optimism in estimated performance. A better way will be to do Nested CV instead. `08_research_extension` was conducted based on this hypothesis
 
 - For Error Analaysis, I analysed Errors by price quantile, more of errors on key features could be done espeically using the key features analysis later on to see if model fails on certain particular feature range. 
