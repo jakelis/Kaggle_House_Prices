@@ -3,6 +3,9 @@
 - End-to-end regression pipeline with data leakage prevention practices: Use of `ColumnTransformer()` and `Pipeline()`
 - Distinguished structured vs random missingness and designed imputation strategies that preserve sementic meanng in data 
 - Improved baseline model performance through feature selection and feature engineering
+
+metric used : Root Mean Square Error: √(1/n ∑ᵢ₌₁ⁿ (yᵢ − ŷᵢ)²)
+
   - in `03_feature_engineering.ipynb`: 
 
   Benchmark RMSE from baseline: 0.147378
@@ -34,6 +37,8 @@
   | rfr_residual | 0.7229 | 0.9319 | 1.0000  |
 
 - Enforced convex combination of the weights of ensemble models to prevent overfitting 
+  y = w1 yridge + w2 ylgb, subjected to convex constraint: 
+  w1 + w2 = 1, wi >= 0 
 - identified limitations and proposed improvements in later part *Limitations and Possible Improvements* 
 - Treated the project as an experimental study rather than leaderboard optimisation
 
@@ -94,7 +99,7 @@ Target variable : SalePrice
 
 # Ensemble
 - Decided to build a weighted ensemble with LightGBM and Ridge because they can each capture different relationships in data (nonlinear and linear)
-- Blended the two models using weights optimised by minimising RMSE
+- Blended the two models with weights subjected to convex constraint, which ensures that the final prediction lies between the individual model predictions, and it will not be extrapolated
 - Compared RMSE with a ensemble of three blended models
 - Decided on final model and produced submission predictions
 
