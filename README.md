@@ -2,7 +2,7 @@
 - Featured research extension of the project that investigates the optimistic estimation effect of K-fold cross validation without nested cross validation, featured at `08_research_extension`
 - End-to-end regression pipeline with data leakage prevention practices: Use of `ColumnTransformer()` and `Pipeline()`
 - Distinguished structured vs random missingness and designed imputation strategies that preserve sementic meanng in data 
-- Improved baseline model performance through feature selection and feature engineering
+- Improved baseline model performance through feature selection and feature engineering, model RMSE improved from 0.147378 from baseline model to 0.1376601 in the final ensemble, 6.59% increase 
 
 metric used : Root Mean Square Error: √(1/n ∑ᵢ₌₁ⁿ (yᵢ − ŷᵢ)²)
 
@@ -49,7 +49,9 @@ This project aims to build an end-to-end machine learning pipeline, exploring fe
 # Dataset
 Source: *Kaggle competition: House Prices - Advanced Regression Techniques*
 
-https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques/data
+Loaded from: https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques/data
+
+The dataset used is The Ames Housing dataset compiled by Dean De Cock.
 
 This dataset contains mixed types of attributes, including numerical (eg. LotArea - Lot size in sqft), nominal (Neighborhood - name of the neighborhood the house is in) and ordinal (eg. OverallCond - the overall condition rating of the house)
 
