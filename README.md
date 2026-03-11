@@ -1,10 +1,20 @@
 # Project Highlight
-- Featured research extension of the project that investigates the optimistic estimation effect of K-fold cross validation without nested cross validation, featured at `08_research_extension`
-- End-to-end regression pipeline with data leakage prevention practices: Use of `ColumnTransformer()` and `Pipeline()`
-- Distinguished structured vs random missingness and designed imputation strategies that preserve sementic meanng in data 
-- Improved baseline model performance through feature selection and feature engineering, model RMSE improved from 0.147378 from baseline model to 0.1376601 in the final ensemble, 6.59% increase 
+- Research extension investigating optimistic performance estimation in standard K-fold cross-validation without nested cross-validation, implemented in `08_research_extension`
+- Built an end-to-end regression pipeline with data leakage prevention using`ColumnTransformer()` and `Pipeline()`
+- Distinguished structured vs random missingness and designed imputation strategies that preserve semantic meanng in data 
+- Improved baseline model performance through feature selection and feature engineering.
 
-metric used : Root Mean Square Error: √(1/n ∑ᵢ₌₁ⁿ (yᵢ − ŷᵢ)²)
+Model RMSE improvement: 
+
+Baseline RMSE: 0.147378
+
+Final Ensemble RMSE: 0.1376601  
+
+Improvement: 6.59% reduction in error 
+
+Evaluation metric used : 
+
+Root Mean Square Error: √(1/n ∑ᵢ₌₁ⁿ (yᵢ − ŷᵢ)²)
 
   - in `03_feature_engineering.ipynb`: 
 
@@ -13,7 +23,7 @@ metric used : Root Mean Square Error: √(1/n ∑ᵢ₌₁ⁿ (yᵢ − ŷᵢ)²
   | versions | changes | RMSE | remarks |
   |----------|---------|------|---------|
   | v1| added engineered features | 0.14255 | raw features remained in the dataset|
-  | v2| removed features that are relevant to the already engineered features| 0.14114| NA|
+  | v2| removed features that are relevant to the already engineered features| 0.14114| Performance improved after feature removal|
 
 - Compared performances of multiple models using K-fold validation
   - in `04_model_comparison.ipynb`: 
@@ -25,9 +35,14 @@ metric used : Root Mean Square Error: √(1/n ∑ᵢ₌₁ⁿ (yᵢ − ŷᵢ)²
   | Elastic Net | 0.1501 | 0.0254 |
   | Random Forest Regressor | 0.1429 | 0.0083 |
 
+  Observations: 
+  - Lasso achieved the lowest mean RMSE
+  - Random Forest Regressor has the lowest variance 
+  - Ridge remained competitive 
+
 - Analysed model residuals using Out-of-Fold (OOF) predictions, in `06_error_analysis.ipynb`, residual by price quantile plot - shows residuals increase at the tails of the target distribution, indicating difficulty modelling extreme house prices 
 
-- Quantified model diversity with residual correlaton to make informed ensemble construction
+- Quantified model diversity with residual correlation to make informed ensemble construction
  - in `06_error_analysis.ipynb`: 
 
   | | ridge_residual| lgb_residual | rfr_residual |
@@ -42,6 +57,15 @@ metric used : Root Mean Square Error: √(1/n ∑ᵢ₌₁ⁿ (yᵢ − ŷᵢ)²
 - identified limitations and proposed improvements in later part *Limitations and Possible Improvements* 
 - Treated the project as an experimental study rather than leaderboard optimisation
 
+# Project Structure 
+- `01_eda.ipynb` : Exploratory data analysis and dataset understanding
+- `02_baseline.ipynb`: Baseline Ridge Regression model 
+- `03_feature_engineering.ipynb`: Feature creation and feature selection
+- `04_model_comparison.ipynb`: Comparison of classical regression models
+- `05_hyperparameter_tuning.ipynb`: GridSearchCV and RandomizedSearchCV 
+- `06_error_analysis.ipynb`: Residual analysis and model error investigation
+- `07_ensemble.ipynb`: Weighted ensemble construction 
+- `08_research_extension.ipynb`: NestedCV experiment
 
 # Problem and Context
 This project aims to build an end-to-end machine learning pipeline, exploring feature engineering, classical regression models, model comparison, hyperparameter tuning, and ensemble learning
@@ -61,7 +85,7 @@ Target variable : SalePrice
 - Explored basic data properties: columns, shape...
 - Identified some numerical attributes to have categorical meanings
 - plotted target variable distribution and identified target variable is skewed
-- seperated attributes into groups of: numerical, nominal, and ordinal
+- separated attributes into groups of: numerical, nominal, and ordinal
 - Identified structured missingness in data
 - Identified random missing data 
 - Conducted correlation analysis: 
@@ -84,7 +108,7 @@ Target variable : SalePrice
 
 # Model Comparison 
 - Compared Linear models including Ridge, Lasso, ElasticNet and Tree model RandomForestRegressor
-- analysed RMSE mean and standard deviation and identified Ridge and RandomForestRegressor as strongest performers
+- analysed RMSE mean and standard deviation to evaluate both performance and stability
 
 
 # Hyperparameter Tuning 
@@ -92,7 +116,10 @@ Target variable : SalePrice
 - Introduced LightGBM, and did RandomizedSearchCV on it, LightGBM achieved the best predictive performance 
 
 # Error Analysis
-- Used OOF predictions produced by Ridge, RandomForest and LightGBM to analyse the correlation between prediction and residual 
+- Used Out Of Fold (OOF) predictions from Ridge, RandomForest, and LightGBM to perform residual analysis
+- Residual vs prediction plotted to identify systematic error patterns 
+- Checked correlation between predictions and residuals to detect bias
+- Checked residual S.D to compare error dispersion between models
 - Analysed Prices ranges that each model makes the least error at 
 - Checked the worst 5% errors and suggested the causes of these errors
 - Extracted feature_importance_ for LightGBM and identified the most important features
@@ -101,17 +128,22 @@ Target variable : SalePrice
 
 # Ensemble
 - Decided to build a weighted ensemble with LightGBM and Ridge because they can each capture different relationships in data (nonlinear and linear)
-- Blended the two models with weights subjected to convex constraint, which ensures that the final prediction lies between the individual model predictions, and it will not be extrapolated
+- Blended the two models with weights subjected to convex constraint, which ensures that the final prediction lies between the individual model predictions, preventing the ensemble prediction from extrapolating outside the range of individual model predictiions
 - Compared RMSE with a ensemble of three blended models
 - Decided on final model and produced submission predictions
 
-# Research extension
-- To reduce hyperparameter selection bias, a 3x3 nested cross validation framework was used
-- The outer loop estimates performance while the inner loop performs hyperparameter tuning
-- compared to standard K-fold cross validation, it was found that nested CV produced higher RMSE and RMSE STD indicating optimism in the original estimate
+# Research extension (08_research_extension.ipynb)
+To investigate hyperparameter selection bias, a 3x3 Nested Cross - Validation framework was implemented. 
+- inner loop: hyperparameter tuning
+- outer loop: unbiased performance estimation
+
+Results showed that Nested Cross-Validation produced higher RMSE and higher RMSE variance, suggesting that the original K-fold estimate was optimistically biased 
+
+This experiment highlights the importance of proper evaluation methodology in machine learning experiments 
+
 
 # Key Learnings
-- Not all missingness are random, some are structured, which means they are expected and they represent certain meaning 
+- Not all missing values are random, some are structured, which means they are expected and they represent certain meaning 
 - skewed distritbution is identified by the plotted distribution has a long tail on one side, and this will cause the extreme values to dominate loss function
 - A linear model is a good baseline model because of its interpretability
 - When comparing models, attention should be on both the mean and the variance 
@@ -131,4 +163,4 @@ Target variable : SalePrice
 
 - During hyperparameter tuning, CV results were used to tune the hyperparameters and the same CV results were used to estimate performance, it could have introduced optimism in estimated performance. A better way will be to do Nested CV instead. `08_research_extension` was conducted based on this hypothesis
 
-- For Error Analaysis, I analysed Errors by price quantile, more of errors on key features could be done espeically using the key features analysis later on to see if model fails on certain particular feature range. 
+- For Error Analaysis, I analysed Errors by price quantile, more of errors on key features could be done especially using the key features analysis later on to see if model fails on certain particular feature range. 
